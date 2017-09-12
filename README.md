@@ -1,7 +1,12 @@
 ## Overview
 
-<Add brief summary>
+Friend Management API
 
-## Quip document
+## API Endpoints:
 
-<Add quip document>
+- POST https://friend-management.herokuapp.com/member
+```
+{
+	"email": "test@test.com"
+}
+```
