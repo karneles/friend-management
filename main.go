@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"net/http"
 
-	"./config"
-	"./errorcode"
-	"./handler"
-	"./router"
-	"./libs/apierror"
-	"./libs/logger"
+	"github.com/karneles/friend-management/config"
+	"github.com/karneles/friend-management/errorcode"
+	"github.com/karneles/friend-management/handler"
+	"github.com/karneles/friend-management/router"
+	"github.com/karneles/friend-management/libs/apierror"
+	"github.com/karneles/friend-management/libs/logger"
 	validator "gopkg.in/go-playground/validator.v9"
 
 	"github.com/facebookgo/inject"

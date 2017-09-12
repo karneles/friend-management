@@ -3,7 +3,7 @@ package router
 import (
 	"github.com/gorilla/mux"
 
-	"./../handler"
+	"github.com/karneles/friend-management/handler"
 )
 
 func CreateRouter(rh handler.RootHandler) *mux.Router {

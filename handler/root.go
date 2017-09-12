@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"../domain/member"
+	"github.com/karneles/friend-management/domain/member"
 )
 
 // RootHandler should list all the handler that we will use
