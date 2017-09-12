@@ -14,8 +14,6 @@ type Config struct {
 	MysqlPassword        string `envconfig:"mysql_password" default:"root-is-not-used"`
 	MysqlConnectionLimit int    `envconfig:"mysql_connection_limit" default:"40"`
 	MysqlDatabase        string `envconfig:"mysql_database" default:"test"`
-	TimeZoneHelper       string `envconfig:"timezone_helper" default:"Asia/Jakarta"`
-	PaginationSize       int    `envconfig:"pagination_size" default:"20"`
 }
 
 var conf Config
