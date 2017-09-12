@@ -7,9 +7,9 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
-	"../../errorcode"
-	"../../libs/apierror"
-	"../../libs/logger"
+	"github.com/karneles/friend-management/errorcode"
+	"github.com/karneles/friend-management/libs/apierror"
+	"github.com/karneles/friend-management/libs/logger"
 	uuid "github.com/satori/go.uuid"
 )
 

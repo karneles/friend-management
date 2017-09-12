@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 	
-	"../../errorcode"
-	"../../libs/apierror"
+	"github.com/karneles/friend-management/errorcode"
+	"github.com/karneles/friend-management/libs/apierror"
 	validator "gopkg.in/go-playground/validator.v9"
 	"fmt"
 )

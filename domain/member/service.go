@@ -3,8 +3,8 @@ package member
 import (
 	"fmt"
 	uuid "github.com/satori/go.uuid"
-	"../../errorcode"
-	"../../libs/apierror"
+	"github.com/karneles/friend-management/errorcode"
+	"github.com/karneles/friend-management/libs/apierror"
 	"github.com/adam-hanna/arrayOperations"
 	"regexp"
 )
