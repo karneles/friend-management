@@ -1,0 +1,10 @@
+name: friend-management
+stack: go
+external: false
+healthCheck: /health
+port: 9501
+commands:
+  dev: realize run
+libs:
+- logger
+- apierror

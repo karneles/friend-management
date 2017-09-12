@@ -1,0 +1,13 @@
+package: github.com/karneles/friend-management
+import:
+- package: github.com/gorilla/mux
+- package: github.com/kelseyhightower/envconfig
+- package: github.com/justinas/alice
+- package: github.com/go-sql-driver/mysql
+- package: gopkg.in/go-playground/validator.v9
+- package: github.com/jmoiron/sqlx
+- package: github.com/guregu/null
+- package: github.com/satori/go.uuid
+- package: github.com/facebookgo/inject
+- package: github.com/RackSec/srslog
+- package: github.com/adam-hanna/arrayOperations
