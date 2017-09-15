@@ -6,6 +6,8 @@ import (
 	
 	"github.com/karneles/friend-management/errorcode"
 	"github.com/karneles/friend-management/libs/apierror"
+	//"../../errorcode"
+	//"../../libs/apierror"
 	validator "gopkg.in/go-playground/validator.v9"
 	"fmt"
 )
@@ -96,9 +98,8 @@ func (h *MemberHandler) failed(w http.ResponseWriter, status int, err error) {
 	w.Write(js)
 }
 
-
-func (h *MemberHandler) StoreMemberHandler(w http.ResponseWriter, r *http.Request) {
-	var member MemberInput
+func (h *MemberHandler) StoreNewMemberHandler(w http.ResponseWriter, r *http.Request) {
+	var member NewMemberInput
 	if err := json.NewDecoder(r.Body).Decode(&member); err != nil {
 		h.failed(w, http.StatusBadRequest, apierror.FromError(errorcode.InvalidRequestData, err))
 		return
@@ -107,7 +108,25 @@ func (h *MemberHandler) StoreMemberHandler(w http.ResponseWriter, r *http.Reques
 		h.failed(w, http.StatusBadRequest, apierror.FromError(errorcode.InvalidRequestData, err))
 		return
 	}
-	res, err := h.MemberService.StoreMember(member)
+	res, err := h.MemberService.StoreNewMember(member)
+	if err != nil {
+		h.failed(w, apierror.GetHTTPStatus(err), err)
+		return
+	}
+	h.commonSuccess(w, http.StatusOK, res)
+}
+
+func (h *MemberHandler) StoreUpdateMemberHandler(w http.ResponseWriter, r *http.Request) {
+	var member UpdateMemberInput
+	if err := json.NewDecoder(r.Body).Decode(&member); err != nil {
+		h.failed(w, http.StatusBadRequest, apierror.FromError(errorcode.InvalidRequestData, err))
+		return
+	}
+	if err := h.Validate.Struct(member); err != nil {
+		h.failed(w, http.StatusBadRequest, apierror.FromError(errorcode.InvalidRequestData, err))
+		return
+	}
+	res, err := h.MemberService.StoreUpdateMember(member)
 	if err != nil {
 		h.failed(w, apierror.GetHTTPStatus(err), err)
 		return

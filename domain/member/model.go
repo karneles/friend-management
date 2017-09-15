@@ -3,32 +3,52 @@ package member
 import (
 	"time"
 
+	"github.com/karneles/friend-management/libs/common"
+	//"../../libs/common"
+
 	"github.com/guregu/null"
 	uuid "github.com/satori/go.uuid"
 )
 
 type Member struct {
-	ID        uuid.UUID   `json:"id" db:"entity_id"`
-	Email      string      `json:"email" db:"email"`
-	Created   time.Time   `json:"created" db:"created"`
-	Updated   null.Time   `json:"updated" db:"updated"`
+	ID        	uuid.UUID   `json:"id" db:"entity_id"`
+	Email     	string      `json:"email" db:"email"`
+	Name	  	string	  	`json:"name" db:"name"`
+	Password	string		`json:"password" db:"password"`
+	Created   	time.Time   `json:"created" db:"created"`
+	Updated   	null.Time   `json:"updated" db:"updated"`
 }
 
-type MemberInput struct {
-	ID   uuid.UUID `json:"id"`
-	Email string    `json:"email" validate:"min=3,max=100"`
+type NewMemberInput struct {
+	ID   		uuid.UUID 	`json:"id"`
+	Email 		string   	`json:"email" validate:"required,min=3,max=45,email"`
+	Name  		string   	`json:"name" validate:"required,max=45"`
+	Password	string		`json:"password" validate:"required,min=8"`
+	Password2	string		`json:"password2" validate:"required,eqfield=Password"`
 }
 
-func (member *Member) Update(input MemberInput) {
-	member.Email = input.Email
+type UpdateMemberInput struct {
+	ID   		uuid.UUID 	`json:"id"`
+	Name  		string   	`json:"name" validate:"required,max=45"`
+	Password	string		`json:"password" validate:"omitempty,required"`
+	Password2	string		`json:"password2" validate:"omitempty,required,eqfield=Password"`
+}
+
+func (member *Member) Update(input UpdateMemberInput) {
+	member.Name = input.Name
+	if len(input.Password) > 0 {
+		member.Password = common.Hash(input.Password)
+	}
 	member.Updated = null.TimeFrom(time.Now())
 }
 
-func (input *MemberInput) ToMember() Member {
+func (input *NewMemberInput) ToMember() Member {
 	return Member{
-		ID:        uuid.NewV4(),
-		Email:      input.Email,
-		Created:   time.Now(),
+		ID:        	uuid.NewV4(),
+		Email:     	input.Email,
+		Name:		input.Name,
+		Password:	common.Hash(input.Password),
+		Created:   	time.Now(),
 	}
 }
 
@@ -70,30 +90,19 @@ type FriendsInput struct {
 }
 
 type EmailInput struct {
-	Email 	string 	`json:"email" validate:"min=3,max=100"`
+	Email 	string 	`json:"email" validate:"min=3,max=45,email"`
 }
 
 type UpdatesInput struct {
-	Requestor 	string `json:"requestor"`
-	Target		string `json:"target"`
+	Requestor 	string `json:"requestor" validate:"min=3,max=45,email"`
+	Target		string `json:"target" validate:"min=3,max=45,email"`
 }
 
 type SendUpdateInput struct {
-	Sender		string `json:"sender"`
+	Sender		string `json:"sender" validate:"min=3,max=45,email"`
 	Text		string `json:"text"`
 }
 
-/*type CommonOutput struct {
-	Success 	bool 	`json:"success"`
+type TextInput struct {
+	Text		string `json:"text"`
 }
-
-type FriendsOutput struct {
-	Success 	bool 		`json:"success"`
-	Friends 	[]string	`json:"friends"`
-	Count		int			`json:"count"`
-}
-
-type UpdatesOutput struct {
-	Success		bool		`json:"success"`
-	Recipients	[]string	`json:"recipients"`
-}*/

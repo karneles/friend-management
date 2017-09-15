@@ -8,6 +8,8 @@ const (
 
 	MemberNotFound     = "MemberNotFound"
 	FriendNotFound		= "FriendNotFound"
+
+	ValidationError = "ValidationError"
 )
 
 func initMap() {
@@ -17,6 +19,8 @@ func initMap() {
 
 	errMap[MemberNotFound] = 404
 	errMap[FriendNotFound] = 404
+
+	errMap[ValidationError] = 404
 }
 
 var errMap map[string]int

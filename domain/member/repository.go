@@ -10,6 +10,9 @@ import (
 	"github.com/karneles/friend-management/errorcode"
 	"github.com/karneles/friend-management/libs/apierror"
 	"github.com/karneles/friend-management/libs/logger"
+	//"../../errorcode"
+	//"../../libs/apierror"
+	//"../../libs/logger"
 	uuid "github.com/satori/go.uuid"
 )
 
@@ -18,6 +21,8 @@ const (
 		SELECT
 			members.entity_id,
 			members.email,
+			members.name,
+			members.password,
 			members.created,
 			members.updated
 		FROM members `
@@ -139,8 +144,10 @@ func (r *MemberSQLRepository) StoreMember(member Member) (err error) {
 	}
 	if exist {
 		statementUpdate, e := r.DB.Prepare(`
-			UPDATE member
+			UPDATE members
 			SET
+				members.name = ?,
+				members.password = ?,
 				members.updated = ?
 			WHERE members.entity_id = ?`)
 		if e != nil {
@@ -148,6 +155,8 @@ func (r *MemberSQLRepository) StoreMember(member Member) (err error) {
 			return
 		}
 		_, err = statementUpdate.Exec(
+			member.Name,
+			member.Password,
 			member.Updated,
 			member.ID)
 		if e != nil {
@@ -159,9 +168,11 @@ func (r *MemberSQLRepository) StoreMember(member Member) (err error) {
 			INSERT INTO members (
 				entity_id,
 				email,
+				name,
+				password,
 				created,
 				updated)
-			VALUES (?, ?, ?, ?)`)
+			VALUES (?, ?, ?, ?, ?, ?)`)
 		if e != nil {
 			err = e
 			return
@@ -169,6 +180,8 @@ func (r *MemberSQLRepository) StoreMember(member Member) (err error) {
 		_, e = statementInsert.Exec(
 			member.ID.String(),
 			member.Email,
+			member.Name,
+			member.Password,
 			member.Created,
 			member.Updated)
 		if e != nil {

@@ -3,7 +3,8 @@ package main
 import (
     "testing"
     "fmt"
-    "github.com/karneles/friend-management/handler"
+	//"github.com/karneles/friend-management/handler"
+	"../handler"
 	validator "gopkg.in/go-playground/validator.v9"
     
     "github.com/facebookgo/inject"

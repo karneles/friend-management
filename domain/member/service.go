@@ -5,6 +5,8 @@ import (
 	uuid "github.com/satori/go.uuid"
 	"github.com/karneles/friend-management/errorcode"
 	"github.com/karneles/friend-management/libs/apierror"
+	//"../../errorcode"
+	//"../../libs/apierror"
 	"github.com/adam-hanna/arrayOperations"
 	"regexp"
 )
@@ -26,17 +28,28 @@ func (s *MemberService) ResolveMembersByIDs(ids []uuid.UUID) ([]Member, error) {
 	return s.MemberRepository.ResolveMembersByIDs(ids)
 }
 
-func (s *MemberService) StoreMember(input MemberInput) (bool, error) {
+func (s *MemberService) StoreNewMember(input NewMemberInput) (bool, error) {
+	member := input.ToMember()
+	
+	if err := s.MemberRepository.StoreMember(member); err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
+func (s *MemberService) StoreUpdateMember(input UpdateMemberInput) (bool, error) {
 	var member Member
 	if input.ID != uuid.Nil {
 		oldfm, err := s.ResolveMemberByID(input.ID)
 		if err != nil {
+			err := apierror.WithMessage(errorcode.MemberNotFound, fmt.Sprintf("No member with ID: %v.", input.ID))			
 			return false, err
 		}
 		member = oldfm
 		member.Update(input)
 	} else {
-		member = input.ToMember()
+		err := apierror.WithMessage(errorcode.MemberNotFound, fmt.Sprintf("No member with ID: %v.", input.ID))	
+		return false, err
 	}
 	if err := s.MemberRepository.StoreMember(member); err != nil {
 		return false, err
