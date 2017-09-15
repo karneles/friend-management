@@ -11,3 +11,4 @@ import:
 - package: github.com/facebookgo/inject
 - package: github.com/RackSec/srslog
 - package: github.com/adam-hanna/arrayOperations
+- package: github.com/dgrijalva/jwt-go
