@@ -9,9 +9,9 @@ Friend Management API
 POST https://friend-management.herokuapp.com/member
 {
 	"email": "test@test.com",
-    "name": "test",
-    "password": "test12345"
-    "password2": "test12345"
+    	"name": "test",
+    	"password": "test12345",
+    	"password2": "test12345"
 }
 ```
 
@@ -20,9 +20,9 @@ POST https://friend-management.herokuapp.com/member
 PUT https://friend-management.herokuapp.com/member
 {
 	"id": "873e2168-17b9-4302-9a32-4c8a9fe7da35",
-    "name": "test",
-    "password": "test12345"
-    "password2": "test12345"
+    	"name": "test",
+    	"password": "test12345",
+    	"password2": "test12345"
 }
 ```
 
